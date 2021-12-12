@@ -32,27 +32,43 @@ internal class EmojiReference {
     
     init() {
         //Try to read path to file
-        if let path = Bundle(for: EmojiReference.self).path(forResource: "emojis", ofType: "json") {
-            if let data = NSData(contentsOfFile: path) {
-                if let jsonData = try? JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as! Dictionary<String, Dictionary<String, Array<Dictionary<String, AnyObject>>>> {
-                    for (group, subgroups) in jsonData {
-                        for (subgroup, emojis) in subgroups {
-                            for emoji in emojis {
-                                if let codepoints_strings  = emoji["codepoints"] as? Array<String>, let description = emoji["description"] as? String {
-                                    //Convert codepoints into UInt32
-                                    let codepoints = codepoints_strings.compactMap({ return Unicode.Scalar(UInt32($0, radix: 16)!) })
-                                    emojiList.append(Emoji(group: EmojiGroup(rawValue: group) ?? .objects,
-                                                           subgroup: subgroup,
-                                                           codePoints: codepoints,
-                                                           description: description))
-                                    //Fill in the hashcode of the emojiList
-                                    emojiHashcodes[codepoints_strings.joined()] = true
-                                }
-                            }
+        guard let path = Bundle(for: EmojiReference.self).path(forResource: "emojis", ofType: "json") else {
+            print("*EmojiReference* ERROR! Cannot make path for emojis.json")
+            return
+        }
+        
+        guard let data = NSData(contentsOfFile: path) else {
+            print("*EmojiReference* ERROR! Missin json at path: \(path)")
+            return
+        }
+        
+        do {
+            let jsonData = try JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as? Dictionary<String, Dictionary<String, Array<Dictionary<String, AnyObject>>>>
+            
+            guard let jsonData = jsonData, !jsonData.isEmpty else {
+                print("*EmojiReference* ERROR! Empty emojis.json file.")
+                return
+            }
+            
+            for (group, subgroups) in jsonData {
+                for (subgroup, emojis) in subgroups {
+                    for emoji in emojis {
+                        if let codepoints_strings  = emoji["codepoints"] as? Array<String>, let description = emoji["description"] as? String {
+                            //Convert codepoints into UInt32
+                            let codepoints = codepoints_strings.compactMap({ return Unicode.Scalar(UInt32($0, radix: 16)!) })
+                            emojiList.append(Emoji(group: EmojiGroup(rawValue: group) ?? .objects,
+                                                   subgroup: subgroup,
+                                                   codePoints: codepoints,
+                                                   description: description))
+                            //Fill in the hashcode of the emojiList
+                            emojiHashcodes[codepoints_strings.joined()] = true
                         }
                     }
                 }
             }
+            
+        } catch let error {
+            print("*EmojiReference* ERROR! Cannot parse emojis.json: \(error.localizedDescription)")
         }
     }
     
