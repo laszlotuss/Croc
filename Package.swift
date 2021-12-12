@@ -25,19 +25,19 @@ let package = Package(
             name: "CrocTests",
             dependencies: ["Croc"],
             path: "Tests",
-            exclude: ["StringExtensionTests.swift", "CharExtensionTests.swift"]
+            exclude: ["StringExtensionTests.swift", "CharExtensionTests.swift", "Info.plist"]
             ),
         .testTarget(
             name: "CharExtensionTests",
             dependencies: ["Croc"],
             path: "Tests",
-            exclude: ["StringExtensionTests.swift", "EmojiLookupTests.swift"]
+            exclude: ["StringExtensionTests.swift", "EmojiLookupTests.swift", "Info.plist"]
             ),
         .testTarget(
             name: "StringExtensionTests",
             dependencies: ["Croc"],
             path: "Tests",
-            exclude: ["CharExtensionTests.swift", "EmojiLookupTests.swift"]
+            exclude: ["CharExtensionTests.swift", "EmojiLookupTests.swift", "Info.plist"]
             )
     ],
     swiftLanguageVersions: [.v4_2]
