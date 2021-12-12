@@ -36,12 +36,12 @@ public extension Character {
     /// U+1FFF is merely one of the many unicode characters not yet implemented (or defined).
     /// It thus prints a ῿ question mark, as do all the unavailable characters.
     /// All unavailable unicode characters share the same question mark [?] bitmap
-    public static let refUnicodePng = Character("\u{1f975}").png(ofSize: Character.refUnicodeSize) // Future Emoji (unsupported)
+    static let refUnicodePng = Character("\u{1f975}").png(ofSize: Character.refUnicodeSize) // Future Emoji (unsupported)
     
     /// Tests against the existence of a given unicode glyph on the present OS
     ///
     /// - Returns: true if this unicode (including emoji) will return a meaningful representation (i.e, not a ῿)
-    public var unicodeSupported : Bool {
+    var unicodeSupported : Bool {
         if let refPng = Character.refUnicodePng,
             let myPng = self.png(ofSize: Character.refUnicodeSize) {
             return myPng != refPng

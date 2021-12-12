@@ -29,7 +29,7 @@ public extension Croc {
     /// - Parameters:
     ///   - group: EmojiGroup type. List can be found at Croc.groupTypes
     /// - Returns: A list of emojis
-    public static func subGroups(for group: EmojiGroup) -> [EmojiSubGroup] {
+    static func subGroups(for group: EmojiGroup) -> [EmojiSubGroup] {
         return emojiRef.subGroups(for:group)
     }
     
@@ -39,7 +39,7 @@ public extension Croc {
     ///   - subgroup: EmojiSubGroup (string) type. List can be found at subGroups(for group: EmojiGroup)
     ///   - limit: Optional limit for the number of emojis to be returned
     /// - Returns: A list of matched emojis
-    public static func emojis(for subgroup: EmojiSubGroup, limit : Int = -1) -> Array<Character> {
+    static func emojis(for subgroup: EmojiSubGroup, limit : Int = -1) -> Array<Character> {
         return emojiRef.emojis(for: subgroup, limit: limit)
     }
     
@@ -49,7 +49,7 @@ public extension Croc {
     ///   - group: EmojiGroup type. List can be found at Croc.groupTypes
     ///   - limit: Optional limit for the number of emojis to be returned
     /// - Returns: A list of matched emojis
-    public static func emojis(for group: EmojiGroup, limit : Int = -1) -> Array<Character> {
+    static func emojis(for group: EmojiGroup, limit : Int = -1) -> Array<Character> {
         return emojiRef.emojis(for: group, limit : limit)
     }
 }
