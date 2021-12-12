@@ -1,4 +1,4 @@
-// swift-tools-version:4.0
+// swift-tools-version:4.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -20,16 +20,25 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "Croc",
-            path: "Sources"),
+            path: "Source"),
+        .testTarget(
+            name: "CrocTests",
+            dependencies: ["Croc"],
+            path: "Tests",
+            exclude: ["StringExtensionTests.swift", "CharExtensionTests.swift"]
+            ),
         .testTarget(
             name: "CharExtensionTests",
             dependencies: ["Croc"],
-            path: "Tests"
+            path: "Tests",
+            exclude: ["StringExtensionTests.swift", "EmojiLookupTests.swift"]
             ),
         .testTarget(
             name: "StringExtensionTests",
             dependencies: ["Croc"],
-            path: "Tests"
+            path: "Tests",
+            exclude: ["CharExtensionTests.swift", "EmojiLookupTests.swift"]
             )
-    ]
+    ],
+    swiftLanguageVersions: [.v4_2]
 )
