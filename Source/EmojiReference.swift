@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 internal class EmojiReference {
     internal var emojiList : Array<Emoji> = []
     
